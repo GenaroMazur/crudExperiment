@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h2>formulario</h2>
+    <h3>Usuarios</h3>
+    <h3>Editar usuario</h3>
+
+    <form method="post" action="/users/<%= usuario.id %>/edit?_method=put">
+      <label for="nombre">nombre</label>
+      <input type="text" name="username" id="nombre" value="<%= usuario.username %>">
+      <br>
+      <label for="password">contraseña</label>
+      <input type="password" name="password" id="password" value="<%= usuario.password %>">
+      <br>
+      <label for="edad">edad</label>
+      <input type="number" name="age" id="edad" min="0" value="<%= usuario.age %>">
+      <br>
+      <input type="submit" value="enviar">
+      <input type="reset" value="Reset">
+    </form>
+  </body>
+</html>

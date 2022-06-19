@@ -11,8 +11,11 @@
       <% usersList.map(user=>{%>
         <li>
           <%= user.username %>
-          <form method="post" action="/users/:<%= user.id %>?_method=delete">
+          <form method="post" action="/users/<%= user.id %>?_method=delete">
             <button type="submit">Eliminar</button>
+          </form>
+          <form method="get" action="/users/<%= user.id %>/edit">
+            <button type="submit">Editar</button>
           </form>
         </li>
       <% }) %> 
