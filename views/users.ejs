@@ -1,0 +1,35 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title><%= title %></title>
+    <link rel='stylesheet' href='/stylesheets/style.css' />
+  </head>
+  <body>
+    <h2>formulario</h2>
+    <h3>Usuarios</h3>
+    <ul>
+      <% usersList.map(user=>{%>
+        <li>
+          <%= user.username %>
+          <form method="post" action="/users/:<%= user.id %>?_method=delete">
+            <button type="submit">Eliminar</button>
+          </form>
+        </li>
+      <% }) %> 
+    </ul>
+    <h3>crear usuario</h3>
+    <form method="post" action="/users/create">
+      <label for="nombre">nombre</label>
+      <input type="text" name="username" id="nombre">
+      <br>
+      <label for="password">contraseña</label>
+      <input type="password" name="password" id="password">
+      <br>
+      <label for="edad">edad</label>
+      <input type="number" name="age" id="edad" min="0">
+      <br>
+      <input type="submit" value="enviar">
+      <input type="reset" value="Reset">
+    </form>
+  </body>
+</html>
