@@ -11,7 +11,9 @@
       <% usersList.map(user=>{%>
         <li>
           <%= user.username %>
-          <img src="/images/userImg/<%= user.image %> " alt="" width="200px" height="200px" style="border-radius:100% ;">
+          <% if (user.image){ %>
+            <img src="/images/userImg/<%= user.image %> " alt="" width="200px" height="200px" style="border-radius:100% ;">
+          <% } %>  
           <form method="post" action="/users/<%= user.id %>?_method=delete">
             <button type="submit">Eliminar</button>
           </form>
