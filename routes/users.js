@@ -2,6 +2,18 @@ var express = require('express');
 var router = express.Router();
 var fs=require("fs");
 var path=require("path")
+const multer=require("multer")
+
+const storage=multer.diskStorage({
+  destination:(req,file,cb)=>{
+    cb(null,path.join(__dirname,"./../public/images/userImg"))
+  },
+  filename:(req,file,cb)=>{
+    let fileName="user_image-"+Date.now()+path.extname(file.originalname)
+    cb(null,fileName)
+  }
+})
+const update=multer({storage})
 
 router.get("/",(req,res)=>{
   let usersJSON=fs.readFileSync(path.join(__dirname,"./../models/users.JSON"),"utf-8")
@@ -17,11 +29,12 @@ router.get("/:userId/edit",(req,res)=>{
   res.render("editUsers",{title:"editar Usuario", usuario:usuario})
 })
 
-router.post("/create",(req,res)=>{
+router.post("/create",update.single("userImage"),(req,res)=>{
   let usuario={
     username:req.body.username||"",
     password:req.body.password||"",
-    age:req.body.age||0
+    age:req.body.age||0,
+    image:req.file.filename||null
   }
   let usersJSON=fs.readFileSync(path.join(__dirname,"./../models/users.JSON"),"utf-8")
   if (usersJSON==""){
@@ -39,11 +52,15 @@ router.delete("/:userId",(req,res)=>{
   let usersJSON=fs.readFileSync(path.join(__dirname,"./../models/users.JSON"),"utf-8")
   let usersList=JSON.parse(usersJSON)
   let userId=req.params.userId
-
   let userList=usersList.filter(user=>{
+    if(user.id==userId){
+      if(user.image!=null){
+        fs.rmSync(path.join(__dirname,"./../public/images/userImg",user.image))
+      }
+    }
     return user.id != userId
   })
-
+  
   fs.writeFileSync(path.join(__dirname,"./../models/users.JSON"),JSON.stringify(userList),"utf-8")
   res.redirect("/users")
 })

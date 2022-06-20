@@ -11,6 +11,7 @@
       <% usersList.map(user=>{%>
         <li>
           <%= user.username %>
+          <img src="/images/userImg/<%= user.image %> " alt="" width="200px" height="200px" style="border-radius:100% ;">
           <form method="post" action="/users/<%= user.id %>?_method=delete">
             <button type="submit">Eliminar</button>
           </form>
@@ -21,7 +22,7 @@
       <% }) %> 
     </ul>
     <h3>crear usuario</h3>
-    <form method="post" action="/users/create">
+    <form method="post" action="/users/create" enctype="multipart/form-data">
       <label for="nombre">nombre</label>
       <input type="text" name="username" id="nombre">
       <br>
@@ -31,7 +32,10 @@
       <label for="edad">edad</label>
       <input type="number" name="age" id="edad" min="0">
       <br>
+      <label for="userImage">edad</label>
+      <input type="file" name="userImage" id="image">
       <input type="submit" value="enviar">
+      <br>
       <input type="reset" value="Reset">
     </form>
   </body>
